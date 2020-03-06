@@ -162,7 +162,7 @@ class ExternalScanSensor extends Sensor {
     return host;
   }
 
-  async cloudConfirmOpenPort(publicIP, port) {
+  static async cloudConfirmOpenPort(publicIP, port) {
     let result = false;
     try {
       const token = await tokenManager.getToken();
@@ -198,7 +198,7 @@ class ExternalScanSensor extends Sensor {
     try {
       //Cloud confirm whether the port is open
       for (let current of waitedPorts) {
-        let isOpen = await this.cloudConfirmOpenPort(publicIP, current.portid);
+        let isOpen = await ExternalScanSensor.cloudConfirmOpenPort(publicIP, current.portid);
         if (isOpen) {
           confirmedPorts.push(current);
         }

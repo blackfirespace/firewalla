@@ -887,6 +887,14 @@ class OpenPortAlarm extends Alarm {
     this['p.showMap'] = false;
   }
 
+  getI18NCategory() {
+    let category = super.getI18NCategory();
+    if (this["p.device.name"]) {
+      category = category + "_DEVICE";
+    }
+    return category;
+  }
+
   keysToCompareForDedup() {
     return ['p.device.ip', 'p.open.protocol', 'p.open.port'];
   }
