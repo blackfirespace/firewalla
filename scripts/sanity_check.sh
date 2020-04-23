@@ -367,6 +367,19 @@ check_conntrack() {
     echo ""
 }
 
+get_redis_stat() {
+    stdbuf -oL timeout 10 redis-cli --stat > /tmp/REDIS_STAT &
+}
+
+show_redis_stat() {
+    echo "---------------------- Redis Stat------------------"
+
+    sed '1d' /tmp/REDIS_STAT
+
+    echo ""
+    echo ""
+}
+
 usage() {
     return
 }
@@ -388,6 +401,7 @@ done
 
 
 if [ "$FAST" == false ]; then
+    get_redis_stat
     check_systemctl_services
     check_rejection
     check_exception
@@ -400,5 +414,6 @@ if [ "$FAST" == false ]; then
     check_iptables
     check_conntrack
     check_speed
+    show_redis_stat
 fi
 check_hosts
